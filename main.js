@@ -255,7 +255,12 @@ const acts = {
     const n = $('#aNick').value.trim(); if (!n) throw new Error('請輸入暱稱');
     checkText(n); await rpc('join_game', { p_nickname: n }); await start();
   }),
-  logout: () => run(async () => { await sb.auth.signOut(); location.reload(); }),
+  // 登出：只清本機的登入狀態，不等伺服器回應（伺服器那一步失敗時，舊寫法會保留登入狀態，重新整理後又進到遊戲）
+  logout: async () => {
+    try { await Promise.race([sb.auth.signOut({ scope: 'local' }), new Promise(r => setTimeout(r, 3000))]); } catch (e) { /* 下面會直接清掉 */ }
+    try { for (const k of Object.keys(localStorage)) if (k.startsWith('sb-')) localStorage.removeItem(k); } catch (e) { /* 無痕模式 */ }
+    location.replace(location.pathname);
+  },
 };
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]'); if (!el || el.tagName === 'SELECT' || el.tagName === 'INPUT') return;
