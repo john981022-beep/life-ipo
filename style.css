@@ -282,3 +282,7 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .intro-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
 .intro-dots i.on{background:var(--cyan)}
 .help{background:none;border:1px solid var(--line);color:var(--cyan);font-size:11px;padding:1px 8px;cursor:pointer;margin-bottom:3px;align-self:flex-end}
+
+/* 分享 */
+.shr-row{padding:0 14px 6px;background:var(--panel)}
+.shr-row .link{padding:2px 0 6px;text-align:left;color:var(--cyan)}

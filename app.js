@@ -581,7 +581,7 @@ function renderSheetLive() {
     ${chartTime(co)}${stats}
     <div class="ratio" aria-label="買賣力道">${tot ? `<i class="b" style="width:${bp}%">買 ${bp}%</i><i class="s" style="width:${100 - bp}%">賣 ${100 - bp}%</i>` : '<i class="n" style="width:100%">今日尚無成交</i>'}</div>
     ${co.idx ? '' : tickRows(co, 8)}`;
-  else if (spTab === 'k') body = `<div class="st1">日 K <span class="mute">每根代表一個交易日，紅漲綠跌</span></div>${chartK(co)}${stats}`;
+  else if (spTab === 'k') body = `<div class="st1">日 K <span class="mute">每根代表一個交易日，紅漲綠跌${co.k.length < 10 && !co.bot && !co.idx ? `。上市第 ${co.k.length + 1} 天，每天收盤會多一根` : ""}</span></div>${chartK(co)}${stats}`;
   else if (spTab === 'parts') chartPts = [], body = `<div class="qt"><div class="qh"><span>成分股</span><span>成交</span><span>漲跌</span><span>幅度</span></div>${Object.values(S.cos).filter(isListed).sort((x, y) => chgOf(y) - chgOf(x)).map(coRow).join('')}</div>`;
   else if (spTab === 'ticks') chartPts = [], body = tickRows(co, 60);
   else if (spTab === 'ops') chartPts = [], body = finOps(co);

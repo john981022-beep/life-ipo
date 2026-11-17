@@ -120,7 +120,7 @@ function vCompany() {
       <div class="gap"></div><div class="is"><div class="is-h">今日損益試算</div>
         ${line('營業收入', t.op)}${line('營業成本', t.cogs)}${line('營業毛利', gross, null, true)}
         ${line('營業費用', t.opex)}${line('營業利益', opInc, null, true)}
-        ${line('營業外收支', t.nonop)}${line('稅前淨利', pre, null, true)}</div>
+        ${line('營業外收支', t.nonop)}${t.rawRev > CAP ? line('超過每日收入上限，不計入', -(t.rawRev - CAP)) : ''}${line('稅前淨利', pre - Math.max(0, t.rawRev - CAP), null, true)}</div>
       <div class="bar" title="每日收入上限"><i style="width:${Math.min(100, t.rawRev / CAP * 100)}%"></i></div>
       <p class="note">每日收入上限 ${fmt(CAP)}${t.rawRev > CAP ? '（已達上限）' : ''}。今日損益越好，收盤時股價越有支撐。</p></div>
 
@@ -378,7 +378,7 @@ function ipoSection() {
   const apps = S.ipoApps || {}, tot = S.ipoTotals || {};
   return `<div class="ipo"><div class="ipo-h"><b>新股申購</b><small>每檔釋出 ${IPO_OFFER_LOTS} 張，超額抽籤</small></div>${l.map(co => {
     const st = ipoStage(co), mine = co.code === S.my, ap = apps[co.code];
-    let act = '';
+    let act = co.status === 'coach' ? `<span class="ipo-f"><button class="btn" disabled>第 ${co.ipoDay + 3} 交易日開放申購</button></span>` : '';
     if (co.status === 'sub') {
       if (mine) act = '<small class="mute">自己的公司不能申購</small>';
       else if (ap) act = `<small class="yl">已申購 ${ap.lots} 張，等待抽籤</small>`;
