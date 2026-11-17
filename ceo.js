@@ -112,7 +112,7 @@ function vCompany() {
 
     <div class="card"><h2>今日營運申報 <small>點選今天發生的事</small></h2>
       ${CATS.map(([id, name, hint]) => `<div class="cat"><div class="cat-h"><b>${name}</b><small>${hint}</small></div><div class="chips">${ACTIONS.filter(a => a.c === id).map(a =>
-        `<button class="chip ${a.a > 0 ? 'rev' : 'exp'}${on(a.id) ? ' on' : ''}" data-act="chk" data-id="${a.id}" aria-pressed="${on(a.id)}">${a.n}<small>${a.a > 0 ? '+' : ''}${fmt(a.a)}</small></button>`).join('')}</div></div>`).join('')}
+        `<button class="chip ${a.a > 0 ? 'rev' : 'exp'}${on(a.id) ? ' on' : ''}" data-act="chk" data-id="${a.id}" aria-pressed="${on(a.id)}">${a.n}${chipAmt(co, a)}</button>`).join('')}</div></div>`).join('')}
       ${co.today.filter(e => e.custom).map(e => `<div class="kv"><span>${esc(e.n)}（自訂）</span><span class="${e.a > 0 ? 'up' : 'dn'}">${sgn(e.a)} <button class="btn" style="padding:2px 8px" data-act="delc" data-id="${e.id}" aria-label="刪除">×</button></span></div>`).join('')}
       <details><summary>新增自訂項目</summary><label for="cName">項目名稱與金額</label>
       <div style="display:flex;gap:8px"><input id="cName" maxlength="16" placeholder="項目名稱"><input id="cAmt" type="number" min="1" max="5000" placeholder="金額" style="width:96px"><select id="cType" style="width:84px" aria-label="類型"><option value="1">收入</option><option value="-1">費用</option></select></div>

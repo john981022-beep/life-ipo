@@ -15,6 +15,10 @@ acts.chk = el => {
   chkPending++;
   chkQueue = chkQueue
     .then(() => rpc('toggle_action', { p_action: id }))
+    .then(v => { // 伺服器回傳實際金額（連續申報會打折），更新畫面上的數字
+      const e = S.my && S.cos[S.my] && S.cos[S.my].today.find(x => x.id === id);
+      if (e && typeof v === 'number' && v !== 0 && v !== e.a) { e.a = v; e.st = v < a.a ? (v * 4 <= a.a ? 7 : 4) : 1; if (tab === 'company') render(); }
+    })
     .catch(err => { toast(err.message || '申報沒有存到，請再試一次'); })
     .then(() => {
       chkPending--;

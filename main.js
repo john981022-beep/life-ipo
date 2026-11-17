@@ -123,7 +123,7 @@ const Cloud = {
         q(sb.from('entries').select('*').eq('code', s.my).eq('day', day).order('id')),
         q(sb.from('weeks').select('*').eq('code', s.my).order('week')),
       ]);
-      s.cos[s.my].today = ent.map(e => ({ id: e.action_id || String(e.id), n: e.label, a: e.amount, custom: !e.action_id }));
+      s.cos[s.my].today = ent.map(e => ({ id: e.action_id || String(e.id), n: e.label, a: e.amount, st: e.streak || 1, custom: !e.action_id }));
       s.cos[s.my].weeks = weeks.map(w => ({ cogs: w.cogs, opex: w.opex, nonop: w.nonop, filed: w.filed, late: w.late, deadline: w.deadline, w: w.week, rev: w.rev, exp: w.expense, net: w.net, eps: Number(w.eps), growth: w.growth == null ? null : Number(w.growth), wchg: Number(w.wchg), div: Number(w.dividend), close: Number(w.close_px) }));
     }
     S = s;

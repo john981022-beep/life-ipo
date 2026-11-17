@@ -286,3 +286,5 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 /* 分享 */
 .shr-row{padding:0 14px 6px;background:var(--panel)}
 .shr-row .link{padding:2px 0 6px;text-align:left;color:var(--cyan)}
+.chip small.disc{color:var(--yellow)}
+.card h2.dn{color:var(--dn);border-left-color:var(--dn)}
