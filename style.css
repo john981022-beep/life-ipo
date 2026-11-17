@@ -261,3 +261,24 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .note.warn{color:var(--yellow)}
 .fb-ed .btn.sell{flex:1}
 .news.sp-pad{padding:10px 14px}
+
+/* 新手介紹 */
+#intro{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:40;display:flex;align-items:center;justify-content:center;padding:16px}
+.intro-card{background:var(--bg);border:1px solid var(--cyan);width:100%;max-width:440px;max-height:calc(100vh - 32px);overflow:auto;padding:16px 18px 18px}
+.intro-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mute);font-family:var(--num)}
+.intro-top button{background:none;border:0;color:var(--mute);font-size:13px;cursor:pointer;padding:4px 0}
+.intro-card h2{margin:8px 0 12px;font-size:20px;color:var(--cyan)}
+.intro-b{font-size:14px;line-height:1.7}
+.intro-b p{margin:0 0 10px}
+.intro-b .lead{font-size:16px;color:var(--yellow)}
+.intro-b .note{margin:8px 0 0}
+.ib{border-left:3px solid var(--cyan);background:var(--panel);padding:8px 12px;margin-bottom:8px}
+.ib b{display:block;font-size:14px}
+.ib span{color:var(--mute);font-size:13px}
+.ib.up{border-left-color:var(--up)}.ib.dn{border-left-color:var(--dn)}
+.intro-b .kv{font-size:13px}
+.intro-b .kv>span:last-child{font-family:inherit}
+.intro-dots{display:flex;justify-content:center;gap:6px;margin:14px 0}
+.intro-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.intro-dots i.on{background:var(--cyan)}
+.help{background:none;border:1px solid var(--line);color:var(--cyan);font-size:11px;padding:1px 8px;cursor:pointer;margin-bottom:3px;align-self:flex-end}
