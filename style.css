@@ -325,3 +325,13 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .inst small{color:var(--mute);font-size:12px;line-height:1.5}
 .inst .btn{flex:none;padding:8px 14px;letter-spacing:0}
 .inst .x{flex:none;background:none;border:0;color:var(--mute);font-size:20px;cursor:pointer;padding:0 4px}
+
+/* 行情表：漲跌含幅度、成交量欄、買賣力道線 */
+.qh,.qr{grid-template-columns:minmax(0,1fr) 64px 70px 66px}
+.qr .chg2{display:flex;flex-direction:column;align-items:flex-end;line-height:1.25}
+.qr .chg2 small{font-size:11px;opacity:.9}
+.qr .vol2{font-size:14px}
+.qn .bs{display:flex;height:3px;width:78%;margin-top:5px;background:var(--soft);border-radius:2px;overflow:hidden}
+.qn .bs i{display:block;height:100%}
+.qn .bs .s{background:var(--dn)}.qn .bs .b{background:var(--up)}
+.qn .bs.none{opacity:.5}
