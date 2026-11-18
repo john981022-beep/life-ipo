@@ -391,3 +391,19 @@ input,select,textarea{font-size:16px}
 /* 保險：整頁不允許左右捲動 */
 html,body{overflow-x:hidden}
 @supports (overflow:clip){html,body{overflow-x:clip}}
+
+/* K 線分頁：日週月與分 K、開高低收資訊列 */
+.kper{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);background:#05080e}
+.kper::-webkit-scrollbar{display:none}
+.kper button{flex:1 0 auto;min-width:44px;background:none;border:0;border-bottom:2px solid transparent;padding:8px 6px;color:var(--mute);font-size:13px;cursor:pointer;white-space:nowrap}
+.kper button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+.kinfo{display:grid;grid-template-columns:1.25fr 1fr 1fr;border-bottom:1px solid var(--line);font-family:var(--num);font-size:12px}
+.kinfo>span{padding:5px 8px;border-right:1px solid var(--line);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:4px;color:var(--mute);white-space:nowrap;overflow:hidden}
+.kinfo>span:nth-child(3n){border-right:0}
+.kinfo>span:nth-child(-n+3){border-top:0}
+.kinfo b{font-weight:500}
+.kinfo .kd{color:var(--text)}
+.kinfo .kc{grid-column:1/-1;justify-content:flex-start;gap:8px}
+.kinfo.on .kd{color:var(--yellow)}
+.kma{display:flex;gap:12px;flex-wrap:wrap;padding:4px 8px;font-family:var(--num);font-size:11px;min-height:16px}
+svg.kchart{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
