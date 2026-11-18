@@ -369,3 +369,7 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 
 /* 訪客 */
 .glogin{color:var(--yellow);border-color:var(--yellow)}
+/* 今天尚無成交的力道線：改成看得見的灰色 */
+.qn .bs.none{opacity:1;background:#2b3547}
+/* 登入頁的安裝提示 */
+.inst-auth{border:1px solid var(--cyan);margin-bottom:12px}

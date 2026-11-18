@@ -85,6 +85,7 @@ function showReset() {
 /* ---------- 2. 新手介紹：左右滑動換頁 ---------- */
 function onSwipe(el, cb, opts = {}) {
   let x0 = null, y0 = 0, t0 = 0, skip = false;
+  el.addEventListener('touchmove', () => { if (chartHeld) skip = true; }, { passive: true });
   el.addEventListener('touchstart', e => {
     const t = e.touches[0]; skip = opts.ignore ? opts.ignore(e.target) : false;
     x0 = t.clientX; y0 = t.clientY; t0 = Date.now();
@@ -93,7 +94,7 @@ function onSwipe(el, cb, opts = {}) {
     if (x0 == null || skip) { x0 = null; return; }
     const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0, edge = x0;
     x0 = null;
-    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5 || Date.now() - t0 > 700) return;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.3 || Date.now() - t0 > 900) return;
     cb(dx < 0 ? 'left' : 'right', edge);
   }, { passive: true });
 }
@@ -208,7 +209,7 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const o = order(), i = o.indexOf(spTab), j = dir === 'left' ? i + 1 : i - 1;
     if (i < 0 || j < 0 || j >= o.length) return;
     spTab = o[j]; renderSheetLive();
-  }, { ignore: t => !!(t.closest('svg.kchart') || t.closest('.sp-trade') || t.closest('input,select,textarea')) });
+  }, { ignore: t => !!(chartHeld || t.closest('.sp-trade') || t.closest('input,select,textarea')) });
 }
 
 /* ---------- 5. 聊天室語音輸入 ---------- */
@@ -238,7 +239,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') {
   addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { /* 註冊失敗不影響遊戲 */ }));
 }
 let installEvt = null;
-addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if (S && tab === 'market') render(); });
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if (document.querySelector('#aEmail')) showAuth(); });
 addEventListener('appinstalled', () => { installEvt = null; toast('已安裝到主畫面'); });
 const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -252,9 +253,36 @@ function installCard() {
 }
 {
   const base = vMarket;
-  vMarket = function () { return installCard() + base(); };
+  void base;  // 安裝提示改放在登入頁（見 v8.js）
   Object.assign(acts, {
     install: async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; render(); },
     instHide: () => { try { localStorage.setItem(INSTALL_KEY, '1'); } catch (e) { /* 無痕模式 */ } render(); },
   });
+}
+
+/* ---------- 走勢圖：手指滑動換分頁、按住才查價 ----------
+   走勢圖佔了大半個畫面，以前手指放在圖上只會查價、不能滑動換分頁。
+   現在手機上要「按住約 0.25 秒」才會出現十字查價線；直接左右滑就是換分頁（跟券商 App 一樣）。 */
+var chartHeld = false;
+{
+  let holdTimer = null, sx = 0, sy = 0, onChart = false;
+  document.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'touch') return;
+    onChart = !!(e.target.closest && e.target.closest('svg.kchart'));
+    if (!onChart) return;
+    sx = e.clientX; sy = e.clientY; chartHeld = false;
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(() => { chartHeld = true; crosshair(e); }, 250);
+    e.stopImmediatePropagation();
+  }, true);
+  document.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'touch' || !onChart) return;
+    if (!chartHeld) {
+      if (Math.abs(e.clientX - sx) > 8 || Math.abs(e.clientY - sy) > 8) clearTimeout(holdTimer);
+      e.stopImmediatePropagation();  // 還沒按住：不查價，讓手勢當成滑動
+    }
+  }, true);
+  const end = () => { clearTimeout(holdTimer); setTimeout(() => { chartHeld = false; }, 0); onChart = false; };
+  document.addEventListener('pointerup', end, true);
+  document.addEventListener('pointercancel', end, true);
 }

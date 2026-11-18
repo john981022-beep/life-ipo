@@ -48,6 +48,9 @@
     base();
     const card = $('#view .card');
     if (card && !card.querySelector('[data-act="guest"]')) card.insertAdjacentHTML('beforeend', '<div class="gap"></div><button class="btn wide" data-act="guest">先以訪客身分逛逛（只能看盤）</button>');
+    // 安裝到手機的提示放在登入頁最上面
+    const ins = installCard();
+    if (ins && card && !$('#view .inst')) card.insertAdjacentHTML('beforebegin', ins.replace('class="inst"', 'class="inst inst-auth"'));
   };
   // 需要登入才能用的動作與分頁
   const LOCKED_ACTS = new Set(['buy', 'sell', 'short', 'cover', 'ordOk', 'watch', 'chatSend', 'mic', 'challenge', 'ipoApply', 'fbSend', 'file', 'chk', 'addc', 'ann', 'ipo', 'opsPost', 'fDeclare', 'fSell', 'chatReport', 'report', 'share', 'shareRank']);
