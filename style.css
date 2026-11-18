@@ -288,3 +288,40 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .shr-row .link{padding:2px 0 6px;text-align:left;color:var(--cyan)}
 .chip small.disc{color:var(--yellow)}
 .card h2.dn{color:var(--dn);border-left-color:var(--dn)}
+
+/* 第六批：密碼眼睛、操作導覽、轉場、語音、安裝提示 */
+.pw{position:relative}
+.pw input{padding-right:64px}
+.pw .eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--cyan);font-size:13px;padding:8px 10px;cursor:pointer}
+#tour{position:fixed;inset:0;z-index:50}
+#tour[hidden]{display:none}
+.tour-hole{position:fixed;border:2px solid var(--yellow);border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,.72),0 0 18px 2px rgba(255,225,74,.55);pointer-events:none;animation:tourGlow 1.4s ease-in-out infinite}
+@keyframes tourGlow{50%{box-shadow:0 0 0 9999px rgba(0,0,0,.72),0 0 28px 6px rgba(255,225,74,.8)}}
+.tour-tip{position:fixed;left:12px;right:12px;max-width:420px;margin:0 auto;background:var(--panel);border:1px solid var(--yellow);padding:12px 14px}
+.tour-tip small{color:var(--mute);font-family:var(--num);font-size:11px}
+.tour-tip b{display:block;color:var(--yellow);font-size:16px;margin:2px 0 4px}
+.tour-tip p{margin:0;font-size:14px;line-height:1.6}
+.tour-btns{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.tour-btns .link{width:auto;padding:0}
+.tour-arrow{position:absolute;width:0;height:0;border:8px solid transparent}
+.tour-tip.below .tour-arrow{top:-16px;border-bottom-color:var(--yellow)}
+.tour-tip.above .tour-arrow{bottom:-16px;border-top-color:var(--yellow)}
+@media (prefers-reduced-motion:reduce){.tour-hole{animation:none}}
+#sheet.slide-in{animation:shIn .3s cubic-bezier(.2,.8,.2,1)}
+#sheet.slide-out{animation:shOut .26s cubic-bezier(.4,0,1,1) forwards}
+@keyframes shIn{from{transform:translateX(100%)}to{transform:none}}
+@keyframes shOut{to{transform:translateX(100%)}}
+.from-right{animation:tabR .28s cubic-bezier(.2,.8,.2,1)}
+.from-left{animation:tabL .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes tabR{from{transform:translateX(40%);opacity:0}to{transform:none;opacity:1}}
+@keyframes tabL{from{transform:translateX(-40%);opacity:0}to{transform:none;opacity:1}}
+#sheetBody{overflow-x:hidden}
+.chat-in .mic{flex:none;padding:8px 12px;letter-spacing:0}
+.chat-in .mic.on{border-color:var(--up);background:rgba(255,61,61,.2);animation:micPulse 1s ease-in-out infinite}
+@keyframes micPulse{50%{opacity:.6}}
+.inst{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--line)}
+.inst>div{flex:1;min-width:0}
+.inst b{display:block;color:var(--cyan);font-size:14px}
+.inst small{color:var(--mute);font-size:12px;line-height:1.5}
+.inst .btn{flex:none;padding:8px 14px;letter-spacing:0}
+.inst .x{flex:none;background:none;border:0;color:var(--mute);font-size:20px;cursor:pointer;padding:0 4px}

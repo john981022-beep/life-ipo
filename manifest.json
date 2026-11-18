@@ -1,9 +1,21 @@
 {
   "name": "人生上市",
   "short_name": "人生上市",
-  "start_url": ".",
+  "description": "把自己經營成一家上市公司，也買賣朋友的人生。",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0b0f14",
-  "theme_color": "#0b0f14",
-  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+  "display_override": ["standalone", "fullscreen"],
+  "orientation": "portrait",
+  "lang": "zh-Hant",
+  "background_color": "#05080f",
+  "theme_color": "#05080f",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
 }
