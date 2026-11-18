@@ -246,7 +246,7 @@ const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.
 const INSTALL_KEY = 'lifeipo-install-hide';
 function installCard() {
   if (isStandalone()) return '';
-  try { if (localStorage.getItem(INSTALL_KEY)) return ''; } catch (e) { /* 照常顯示 */ }
+  try { if (sessionStorage.getItem(INSTALL_KEY)) return ''; } catch (e) { /* 照常顯示 */ }  // 按 × 只隱藏到這次關閉網頁為止
   if (installEvt) return `<div class="inst"><div><b>把人生上市裝到手機</b><small>像 App 一樣從主畫面打開，全螢幕看盤</small></div><button class="btn pri" data-act="install">安裝</button><button class="x" data-act="instHide" aria-label="不要再顯示">×</button></div>`;
   if (isIOS()) return `<div class="inst"><div><b>把人生上市裝到手機</b><small>用 Safari 打開，點下方的「分享」按鈕，再選「加入主畫面」</small></div><button class="x" data-act="instHide" aria-label="不要再顯示">×</button></div>`;
   return '';
@@ -256,7 +256,7 @@ function installCard() {
   void base;  // 安裝提示改放在登入頁（見 v8.js）
   Object.assign(acts, {
     install: async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; render(); },
-    instHide: () => { try { localStorage.setItem(INSTALL_KEY, '1'); } catch (e) { /* 無痕模式 */ } render(); },
+    instHide: () => { try { sessionStorage.setItem(INSTALL_KEY, '1'); } catch (e) { /* 無痕模式 */ } const c = document.querySelector('.inst'); if (c) c.remove(); },
   });
 }
 

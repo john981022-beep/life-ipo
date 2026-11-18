@@ -106,6 +106,7 @@
 /* ---------- 3. 安裝說明依瀏覽器區分 ----------
    iPhone 只有 Safari（新版 iOS 也包含 Chrome）能「加入主畫面」；LINE、IG、FB 的內建瀏覽器不行，要先換到 Safari。
    新版 Safari 的分享按鈕收在網址列的「⋯」裡，不一定在畫面下方。 */
+const SHARE_ICON = '<svg class="shi" viewBox="0 0 24 24" aria-label="分享按鈕"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M6 11H4.5v10h15V11H18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function iosBrowser() {
   const ua = navigator.userAgent;
   if (/\bLine\//i.test(ua)) return 'line';
@@ -121,7 +122,7 @@ function iosBrowser() {
     if (!h || installEvt || !isIOS()) return h;
     const b = iosBrowser(), url = SITE_URL();
     const steps = {
-      safari: ['點網址列旁邊的「⋯」按鈕（舊版 iPhone 是畫面最下方中間、方框加向上箭頭的「分享」按鈕）', '選「分享」', '往下滑，點「加入主畫面」，再點「新增」'],
+      safari: ['點畫面最下方中間的「分享」按鈕 ' + SHARE_ICON + '（新版 iPhone 如果下方沒有，就點網址列旁的「⋯」再選「分享」）', '往下滑，點「加入主畫面」', '點右上角「新增」，主畫面就會出現人生上市的圖示'],
       chrome: ['點網址列右邊的分享按鈕（方框加向上箭頭）', '往下滑，點「加入主畫面」', '點「新增」'],
       line: ['你現在是用 LINE 開的網頁，這裡不能加入主畫面', '點右上角（或右下角）的選單，選「在 Safari 中開啟」或「用預設瀏覽器開啟」', '到 Safari 之後，回到這一頁照著說明加入主畫面'],
       social: ['你現在是用 IG／FB 開的網頁，這裡不能加入主畫面', '點右上角的「⋯」，選「在外部瀏覽器開啟」', '到 Safari 之後，回到這一頁照著說明加入主畫面'],
