@@ -4,7 +4,7 @@
 
 const CFG = window.LIFEIPO_CONFIG || {};
 const CLOUD = !!(CFG.url && CFG.key);
-let sb = null, uid = null, nick = '';
+let sb = null, uid = null, nick = '', GUEST = false;  // GUEST：訪客（匿名登入，只能看盤）
 
 /* ---------- 內容把關（伺服器端也會再檢查一次） ---------- */
 const BAD_WORDS = ["幹你","幹妳","幹他","幹她","操你","操妳","肏","靠北","靠腰","靠杯","靠夭","他媽的","她媽的","你媽的","妳媽的","你娘","妳娘","機掰","雞掰","機歪","雞歪","雞巴","懶叫","懶覺","屌你","去死","白癡","白痴","智障","腦殘","低能","賤人","賤貨","婊子","臭婊","破麻","北七","垃圾人","王八蛋","畜生","人渣","死全家","做愛","性交","口交","肛交","打炮","約炮","援交","賣淫","嫖","色情","裸照","裸聊","陰莖","陰道","奶子","乳交","自慰","打手槍","強姦","強暴","性侵","迷姦","亂倫","a片","av女優","成人影片","情色","自殺","殺了你","殺死你","砍死你","弄死你","支那","死gay","死同性戀","黑鬼","番仔","死胖子","殘廢","毒品","安非他命","海洛因","k他命","賭博","博弈","娛樂城","百家樂","六合彩","簽賭","運彩代","加line","加賴","加我賴","fuck","shit","bitch","dick","pussy","porn","nigger","asshole"];
@@ -89,7 +89,7 @@ const Cloud = {
     const [cos, recs, prof, hold, news, anns, rank, mkt, idays, trs, wl] = await Promise.all([
       q(sb.from('companies').select('*')),
       q(sb.from('day_records').select('code,day,open_px,high_px,low_px,close_px,vol').gte('day', day - 40).order('day')),
-      q(sb.from('profiles').select('*').eq('id', uid).single()),
+      GUEST ? Promise.resolve({ cash: 0 }) : q(sb.from('profiles').select('*').eq('id', uid).single()),
       q(sb.from('holdings').select('*').eq('user_id', uid)),
       q(sb.from('news').select('*').order('id', { ascending: false }).limit(60)),
       q(sb.from('announcements').select('*').order('id', { ascending: false }).limit(80)),
@@ -172,9 +172,13 @@ async function start() {
     const { data: { session } } = await sb.auth.getSession();
     if (!session) return showAuth();
     uid = session.user.id;
-    const prof = await q(sb.from('profiles').select('nickname').eq('id', uid).maybeSingle());
-    if (!prof) return showNick();
-    nick = prof.nickname;
+    GUEST = !!session.user.is_anonymous;
+    if (GUEST) nick = '訪客';
+    else {
+      const prof = await q(sb.from('profiles').select('nickname').eq('id', uid).maybeSingle());
+      if (!prof) return showNick();
+      nick = prof.nickname;
+    }
   }
   await B.init();
   $('#tabs').hidden = false; render();

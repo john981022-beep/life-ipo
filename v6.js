@@ -195,7 +195,8 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (lastTab && lastTab !== spTab && was >= 0 && now >= 0 && !reduceMotion) {
       const tabs = $('#spLive .sp-tabs'), cls = now > was ? 'from-right' : 'from-left';
       for (let el = tabs && tabs.nextElementSibling; el; el = el.nextElementSibling) { el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 300); }
-      const on = tabs && tabs.querySelector('.on'); if (on) on.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      // 只捲動分頁列本身；用 scrollIntoView 會連整個頁面一起橫移，看起來像大幅晃動
+      const on = tabs && tabs.querySelector('.on'); if (on) tabs.scrollTo({ left: on.offsetLeft - (tabs.clientWidth - on.offsetWidth) / 2, behavior: 'smooth' });
     }
     lastTab = spTab;
   };

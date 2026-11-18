@@ -335,3 +335,37 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .qn .bs i{display:block;height:100%}
 .qn .bs .s{background:var(--dn)}.qn .bs .b{background:var(--up)}
 .qn .bs.none{opacity:.5}
+
+/* 買賣力道線縮短為原本的三分之二 */
+.qn .bs{width:52%}
+
+/* 開場動畫 */
+#opening{position:fixed;inset:0;z-index:100;background:#020409;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;transition:opacity .38s ease}
+#opening.op-out{opacity:0}
+.op-tape{position:absolute;top:calc(14px + env(safe-area-inset-top));left:0;right:0;white-space:nowrap;overflow:hidden;font-family:var(--num);font-size:12px;opacity:.75}
+.op-tape span{display:inline-block;animation:opTape 6s linear infinite}
+.op-tape i{font-style:normal;margin-right:22px}
+.op-tape i.up{color:var(--up)}.op-tape i.dn{color:var(--dn)}
+@keyframes opTape{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.op-chart{position:absolute;left:4%;right:4%;width:92%;height:46%;top:22%;opacity:.55}
+.op-k{opacity:0;transform-origin:center bottom;animation:opK .3s ease-out forwards}
+@keyframes opK{from{opacity:0;transform:scaleY(.2)}to{opacity:1;transform:none}}
+.op-line{stroke-dasharray:420;stroke-dashoffset:420;animation:opLine .7s .85s ease-in forwards;filter:drop-shadow(0 0 4px rgba(255,61,61,.8))}
+@keyframes opLine{to{stroke-dashoffset:0}}
+.op-bell{position:relative;width:76px;height:76px;opacity:0;animation:opBellIn .25s 1.45s ease-out forwards}
+.op-bell svg{width:100%;height:100%;transform-origin:50% 8%;animation:opRing .6s 1.6s ease-in-out 2}
+.op-bell b{position:absolute;right:-34px;top:-6px;color:var(--yellow);font-size:22px;opacity:0;animation:opDing .5s 1.65s ease-out forwards}
+@keyframes opBellIn{to{opacity:1}}
+@keyframes opRing{25%{transform:rotate(18deg)}75%{transform:rotate(-18deg)}}
+@keyframes opDing{0%{opacity:0;transform:scale(.6)}40%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:translateY(-10px)}}
+.op-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;animation:opFlash .35s 1.7s ease-out}
+@keyframes opFlash{20%{opacity:.35}100%{opacity:0}}
+.op-logo{position:relative;text-align:center;margin-top:14px;opacity:0;animation:opStamp .45s 2.05s cubic-bezier(.2,1.6,.4,1) forwards}
+.op-logo b{display:block;font-size:40px;letter-spacing:6px;color:var(--cyan);text-shadow:0 0 18px rgba(53,212,228,.5)}
+.op-logo span{display:block;color:var(--text);font-size:14px;margin-top:6px;letter-spacing:2px}
+.op-logo small{display:inline-block;margin-top:10px;color:#fff;background:var(--up);padding:2px 12px;font-size:14px;letter-spacing:4px}
+@keyframes opStamp{from{opacity:0;transform:scale(1.8)}to{opacity:1;transform:none}}
+.op-skip{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom));color:var(--mute);font-size:12px;margin:0}
+
+/* 訪客 */
+.glogin{color:var(--yellow);border-color:var(--yellow)}

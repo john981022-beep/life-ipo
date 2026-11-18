@@ -21,7 +21,7 @@ Object.assign(Local, {
     try { [chat, fb, prof, qs, feed, mkt] = await Promise.all([
       q(sb.from('chat').select('*').order('id', { ascending: false }).limit(80)),
       q(sb.from('feedback').select('*').order('id', { ascending: false }).limit(200)),
-      q(sb.from('profiles').select('is_admin').eq('id', uid).single()),
+      q(sb.from('profiles').select('is_admin').eq('id', uid).maybeSingle()),
       my ? q(sb.from('quarters').select('*').eq('code', my).order('quarter')) : [],
       q(sb.from('news').select('id,body,created_at').order('id', { ascending: false }).limit(40)),
       q(sb.from('market').select('last_date').single()),
@@ -29,7 +29,7 @@ Object.assign(Local, {
     S.extOff = false;
     S.chat = chat.reverse().map(mapChat);
     S.feedback = fb.map(f => ({ id: f.id, name: f.nickname, kind: f.kind, body: f.body, status: f.status, reply: f.reply, t: Date.parse(f.created_at), mine: f.user_id === uid }));
-    S.admin = !!prof.is_admin;
+    S.admin = !!(prof && prof.is_admin);
     S.newsFeed = feed.reverse().map(n => ({ id: n.id, body: n.body, t: Date.parse(n.created_at) }));
     S.date = mkt.last_date;  // 目前交易日對應的日曆日期（23:00 換日）
     // 新股申購：只需要還沒掛牌那幾檔的申購紀錄
