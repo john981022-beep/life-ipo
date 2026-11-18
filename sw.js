@@ -2,7 +2,7 @@
    - 遊戲畫面的檔案（html、css、js、圖示）存在手機裡，打開更快，網路不穩也能先顯示畫面
    - 行情、下單、聊天等資料一律即時向伺服器拿，不會快取，避免看到舊股價
    更新程式時：改 index.html 的 ?v= 版本號，並同步改下面的 VERSION。 */
-const VERSION = '20261118f';
+const VERSION = '20261118g';
 const CACHE = 'lifeipo-' + VERSION;
 const CORE = ['./', 'index.html', 'manifest.json', 'icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
   ...['style.css', 'config.js', 'app.js', 'ceo.js', 'v3.js', 'main.js', 'ext.js', 'intro.js', 'v4.js', 'v5.js', 'v6.js', 'v7.js', 'v8.js'].map(f => f + '?v=' + VERSION)];

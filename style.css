@@ -378,3 +378,10 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .inst-ios ol li{margin-bottom:2px}
 .inst-ios .btn{margin-top:8px;padding:6px 12px;font-size:13px}
 .inst-ios .shi{width:18px;height:18px;vertical-align:-4px;color:#2f8cff}
+
+/* 安裝到主畫面後，iPhone 狀態列會蓋住最上方：往下讓出狀態列的高度 */
+#top{padding-top:calc(12px + env(safe-area-inset-top))}
+.sp-nav{padding-top:env(safe-area-inset-top)}
+#sheet{padding-top:0}
+.sp-nav button{min-width:48px;min-height:44px}
+#push{padding-top:calc(10px + env(safe-area-inset-top))}

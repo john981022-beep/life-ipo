@@ -88,7 +88,7 @@ function opsCard() {
     <div class="kv"><span>今日預估淨利</span><b class="${cls(net)}">${(net > 0 ? '+' : '') + fmt(net)}</b></div>
     <div class="kv"><span>對今天收盤股價的影響</span><b class="${cls(est)}">約 ${(est > 0 ? '+' : '') + est.toFixed(1)}%</b></div>
     <p class="note">${co.today.length ? '這是營運表現帶來的部分，實際收盤價還會受買賣和隨機波動影響。申報內容會累計成月營收、季報和股利，其他玩家在你的個股頁「營運」分頁看得到。' : '今天還沒申報。整天沒申報，收盤時股價會小跌約 1%。到下面「今日營運申報」點選今天發生的事。'}</p>
-    ${CLOUD ? `<div class="gap"></div><button class="btn wide" data-act="opsPost" ${co.today.length && !S.opsPosted ? '' : 'disabled'}>${S.opsPosted ? '今天已發布營運日誌' : '發布營運日誌到新聞與聊天室'}</button>` : ''}</div>`;
+  </div>`;
 }
 {
   const base = vCompany;
@@ -187,4 +187,12 @@ function chatRows() {
     return h + `<div class="card"><h2>被檢舉的聊天訊息 <small>${l.length} 則</small></h2>${l.length ? l.map(m => `<div class="news"><small>${esc(m.name)}・${m.n} 人檢舉・${m.hidden ? '<span class="dn">已隱藏</span>' : '顯示中'}</small>${esc(m.body)}
       <div class="fb-ed"><button class="btn" data-act="chatAdmin" data-id="${m.id}" data-op="${m.hidden ? 'show' : 'hide'}">${m.hidden ? '恢復顯示' : '隱藏'}</button><button class="btn" data-act="chatAdmin" data-id="${m.id}" data-op="mute">隱藏並禁言</button><button class="btn" data-act="chatAdmin" data-id="${m.id}" data-op="unmute">解除禁言</button></div></div>`).join('') : '<p class="note">目前沒有被檢舉的訊息。同一則訊息被 3 個人檢舉會先自動隱藏。</p>'}</div>`;
   };
+}
+
+// 申報完最自然的下一步：發布營運日誌（按鈕放在申報區最下方）
+function opsBtn(co) {
+  if (!CLOUD) return '';
+  if (S.opsPosted) return '<div class="gap"></div><button class="btn wide" disabled>今天已發布營運日誌</button>';
+  return `<div class="gap"></div><p class="note">申報好了嗎？發布營運日誌，讓股東和聊天室看到你今天的表現。</p>
+    <button class="btn ${co.today.length ? 'pri' : ''} wide" data-act="opsPost" ${co.today.length ? '' : 'disabled'}>發布營運日誌到新聞與聊天室</button>`;
 }

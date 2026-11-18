@@ -122,7 +122,7 @@ function vCompany() {
         ${line('營業費用', t.opex)}${line('營業利益', opInc, null, true)}
         ${line('營業外收支', t.nonop)}${t.rawRev > CAP ? line('超過每日收入上限，不計入', -(t.rawRev - CAP)) : ''}${line('稅前淨利', pre - Math.max(0, t.rawRev - CAP), null, true)}</div>
       <div class="bar" title="每日收入上限"><i style="width:${Math.min(100, t.rawRev / CAP * 100)}%"></i></div>
-      <p class="note">每日收入上限 ${fmt(CAP)}${t.rawRev > CAP ? '（已達上限）' : ''}。今日損益越好，收盤時股價越有支撐。</p></div>
+      <p class="note">每日收入上限 ${fmt(CAP)}${t.rawRev > CAP ? '（已達上限）' : ''}。今日損益越好，收盤時股價越有支撐。</p>${opsBtn(co)}</div>
 
     <div class="card"><h2>重大訊息 <small>每天最多 3 則</small></h2>
       <p class="note">用公司的口吻公告你的人生大事，會出現在所有人的新聞頁和你的個股頁。</p>
