@@ -138,7 +138,7 @@ svg.kchart .tx{font-size:9px;font-family:var(--num);fill:currentColor}
 
 /* 券商功能：搜尋、分頁籤、跳價閃爍、自選、委託確認、帳務、成交回報、十字查價 */
 .mbar{padding:10px 14px 0}
-.mbar input{padding:8px 12px;font-size:14px}
+.mbar input{padding:8px 12px;font-size:16px}
 .seg{display:flex;gap:6px;padding:10px 14px 4px}
 .seg button{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:7px 0;color:var(--mute);cursor:pointer;font-size:13px}
 .seg button.on{color:var(--bg);background:var(--cyan);border-color:var(--cyan);font-weight:600}
@@ -385,3 +385,9 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 #sheet{padding-top:0}
 .sp-nav button{min-width:48px;min-height:44px}
 #push{padding-top:calc(14px + env(safe-area-inset-top))}
+
+/* iPhone 點輸入框時，字小於 16px 會自動放大整頁而且不會縮回，畫面右邊就被切掉；輸入欄位一律 16px */
+input,select,textarea{font-size:16px}
+/* 保險：整頁不允許左右捲動 */
+html,body{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
