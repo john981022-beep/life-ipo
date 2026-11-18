@@ -102,3 +102,36 @@
   const baseTour = tourStart;
   tourStart = function (force) { if (!GUEST) baseTour(force); };
 }
+
+/* ---------- 3. 安裝說明依瀏覽器區分 ----------
+   iPhone 只有 Safari（新版 iOS 也包含 Chrome）能「加入主畫面」；LINE、IG、FB 的內建瀏覽器不行，要先換到 Safari。
+   新版 Safari 的分享按鈕收在網址列的「⋯」裡，不一定在畫面下方。 */
+function iosBrowser() {
+  const ua = navigator.userAgent;
+  if (/\bLine\//i.test(ua)) return 'line';
+  if (/FBAN|FBAV|Instagram|Threads/i.test(ua)) return 'social';
+  if (/CriOS/i.test(ua)) return 'chrome';
+  if (/EdgiOS|FxiOS/i.test(ua)) return 'other';
+  return 'safari';
+}
+{
+  const base = installCard;
+  installCard = function () {
+    const h = base();
+    if (!h || installEvt || !isIOS()) return h;
+    const b = iosBrowser(), url = SITE_URL();
+    const steps = {
+      safari: ['點網址列旁邊的「⋯」按鈕（舊版 iPhone 是畫面最下方中間、方框加向上箭頭的「分享」按鈕）', '選「分享」', '往下滑，點「加入主畫面」，再點「新增」'],
+      chrome: ['點網址列右邊的分享按鈕（方框加向上箭頭）', '往下滑，點「加入主畫面」', '點「新增」'],
+      line: ['你現在是用 LINE 開的網頁，這裡不能加入主畫面', '點右上角（或右下角）的選單，選「在 Safari 中開啟」或「用預設瀏覽器開啟」', '到 Safari 之後，回到這一頁照著說明加入主畫面'],
+      social: ['你現在是用 IG／FB 開的網頁，這裡不能加入主畫面', '點右上角的「⋯」，選「在外部瀏覽器開啟」', '到 Safari 之後，回到這一頁照著說明加入主畫面'],
+      other: ['這個瀏覽器可能不支援加入主畫面', '建議複製網址，改用 Safari 打開', '再照著說明加入主畫面'],
+    }[b];
+    return `<div class="inst inst-ios"><div><b>把人生上市裝到 iPhone</b><ol>${steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      ${b !== 'safari' && b !== 'chrome' ? `<button class="btn" data-act="copyUrl" data-url="${esc(url)}">複製網址</button>` : ''}</div><button class="x" data-act="instHide" aria-label="不要再顯示">×</button></div>`;
+  };
+  acts.copyUrl = async el => {
+    try { await navigator.clipboard.writeText(el.dataset.url); toast('網址已複製，到 Safari 貼上打開'); }
+    catch (e) { toast('請手動複製：' + el.dataset.url); }
+  };
+}

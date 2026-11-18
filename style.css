@@ -373,3 +373,7 @@ svg.kchart .xh{stroke:var(--yellow);stroke-width:.8;stroke-dasharray:2 2}
 .qn .bs.none{opacity:1;background:#2b3547}
 /* 登入頁的安裝提示 */
 .inst-auth{border:1px solid var(--cyan);margin-bottom:12px}
+.inst-ios{align-items:flex-start}
+.inst-ios ol{margin:6px 0 0;padding-left:18px;color:var(--text);font-size:13px;line-height:1.6}
+.inst-ios ol li{margin-bottom:2px}
+.inst-ios .btn{margin-top:8px;padding:6px 12px;font-size:13px}
